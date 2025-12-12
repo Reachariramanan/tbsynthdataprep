@@ -282,3 +282,35 @@ INFO:werkzeug: * Debugger PIN: 145-903-840
 WARNING:werkzeug: * Running on all addresses.
    WARNING: This is a development server. Do not use it in a production deployment.
 INFO:werkzeug: * Running on http://192.168.29.61:5000/ (Press CTRL+C to quit)
+INFO:werkzeug: * Detected change in 'c:\\Users\\reach\\OneDrive\\Desktop\\TuberDataPrep\\run.py', reloading
+🚀 Starting TB Detection Web Interface...
+📊 Available endpoints:
+   Home: http://localhost:5000/
+   API: http://localhost:5000/api/assess
+   About: http://localhost:5000/about
+   Disclaimer: http://localhost:5000/medical-disclaimer
+✅ TB Detection Model loaded successfully
+INFO:werkzeug: * Restarting with watchdog (windowsapi)
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 145-903-840
+WARNING:werkzeug: * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+INFO:werkzeug: * Running on http://192.168.29.61:5000/ (Press CTRL+C to quit)
+INFO:werkzeug: * Detected change in 'c:\\Users\\reach\\OneDrive\\Desktop\\TuberDataPrep\\train_save_model.py', reloading
+INFO:werkzeug: * Detected change in 'c:\\Users\\reach\\OneDrive\\Desktop\\TuberDataPrep\\retrain_full_system.py', reloading
+INFO:werkzeug: * Detected change in 'c:\\Users\\reach\\OneDrive\\Desktop\\TuberDataPrep\\testcase.py', reloading
+INFO:werkzeug: * Detected change in 'c:\\Users\\reach\\OneDrive\\Desktop\\TuberDataPrep\\verify_model.py', reloading
+INFO:werkzeug: * Detected change in 'c:\\Users\\reach\\OneDrive\\Desktop\\TuberDataPrep\\utils.py', reloading
+🚀 Starting TB Detection Web Interface...
+📊 Available endpoints:
+   Home: http://localhost:5000/
+   API: http://localhost:5000/api/assess
+   About: http://localhost:5000/about
+   Disclaimer: http://localhost:5000/medical-disclaimer
+✅ TB Detection Model loaded successfully
+INFO:werkzeug: * Restarting with watchdog (windowsapi)
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 145-903-840
+WARNING:werkzeug: * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+INFO:werkzeug: * Running on http://192.168.29.61:5000/ (Press CTRL+C to quit)
