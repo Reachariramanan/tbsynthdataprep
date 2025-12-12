@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TB Assessment Results</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .result-card {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .risk-indicator {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        .risk-score {
+            font-size: 3em;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .risk-category {
+            font-size: 2em;
+            font-weight: 600;
+            margin: 15px 0;
+        }
+
+        .high-risk { color: #e74c3c; }
+        .moderate-risk { color: #f39c12; }
+        .low-risk { color: #27ae60; }
+        .healthy { color: #27ae60; }
+        .pulmonary { color: #3498db; }
+
+        .interpretation {
+            background: #f8f9fa;
+            border-left: 5px solid #007bff;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 8px;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .symptoms-summary {
+            background: #e9ecef;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .symptoms-summary h3 {
+            color: #495057;
+            margin-bottom: 10px;
+        }
+
+        .symptom-count {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .demographics-info {
+            background: #e7f3ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #007bff;
+        }
+
+        .demographics-info h3 {
+            color: #0056b3;
+            margin-bottom: 15px;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .demo-item {
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+        }
+
+        .demo-label {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        .demo-value {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .bmi-indicator {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .bmi-underweight { background: #ffc107; color: #856404; }
+        .bmi-normal { background: #28a745; color: white; }
+        .bmi-overweight { background: #ff9800; color: white; }
+        .bmi-obese { background: #dc3545; color: white; }
+
+        .key-symptoms {
+            margin: 20px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+        }
+
+        .key-symptoms h3 {
+            color: #495057;
+            margin-bottom: 15px;
+        }
+
+        .symptom-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #f1f3f4;
+        }
+
+        .symptom-name {
+            font-weight: 500;
+        }
+
+        .importance-bar {
+            flex: 1;
+            margin: 0 20px;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+        }
+
+        .importance-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 4px;
+        }
+
+        .importance-value {
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .recommendations {
+            background: #fff3cd;
+            border: 1px solid #ffeeba;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .recommendations h3 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .recommendations p {
+            color: #856404;
+            line-height: 1.6;
+        }
+
+        .actions {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #e1e8ed;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 0 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .disclaimer {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 8px;
+            color: #721c24;
+            font-size: 0.9em;
+        }
+
+        .disclaimer h4 {
+            margin-bottom: 10px;
+            color: #721c24;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .risk-score {
+                font-size: 2.5em;
+            }
+
+            .risk-category {
+                font-size: 1.5em;
+            }
+
+            .btn {
+                display: block;
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🩺 TB Assessment Results</h1>
+            <p>Clinical risk evaluation based on your responses</p>
+        </div>
+
+        <div class="content">
+            <div class="result-card">
+                {% set risk_class = {
+                    "High TB Risk": "high-risk",
+                    "Moderate TB Risk": "moderate-risk",
+                    "Low TB Risk": "low-risk",
+                    "Healthy": "healthy",
+                    "Pulmonary Issue": "pulmonary"
+                }.get(result.risk_category, "healthy") %}
+
+                <div class="risk-indicator">
+                    {% if result.risk_category == "High TB Risk" %}⚠️
+                    {% elif result.risk_category == "Moderate TB Risk" %}🟡
+                    {% elif result.risk_category == "Low TB Risk" %}🟢
+                    {% elif result.risk_category == "Pulmonary Issue" %}🔵
+                    {% else %}🟢{% endif %}
+                </div>
+
+                <div class="risk-score {{ risk_class }}">{{ result.probability }}%</div>
+                <div class="risk-category {{ risk_class }}">{{ result.risk_category }}</div>
+            </div>
+
+            <div class="interpretation">
+                <h3>🏥 Clinical Interpretation</h3>
+                <p>{{ result.clinical_interpretation }}</p>
+            </div>
+
+            {% if result.demographics %}
+            <div class="demographics-info">
+                <h3>👤 Patient Information</h3>
+                <div class="demo-grid">
+                    <div class="demo-item">
+                        <div class="demo-label">Age</div>
+                        <div class="demo-value">{{ result.demographics.age }} years</div>
+                    </div>
+                    <div class="demo-item">
+                        <div class="demo-label">Gender</div>
+                        <div class="demo-value">{{ 'Male' if result.demographics.gender == 'M' else 'Female' }}</div>
+                    </div>
+                    <div class="demo-item">
+                        <div class="demo-label">Height</div>
+                        <div class="demo-value">{{ result.demographics.height }} cm</div>
+                    </div>
+                    <div class="demo-item">
+                        <div class="demo-label">Weight</div>
+                        <div class="demo-value">{{ result.demographics.weight }} kg</div>
+                    </div>
+                    <div class="demo-item">
+                        <div class="demo-label">Body Mass Index (BMI)</div>
+                        <div class="demo-value">
+                            {{ result.demographics.bmi_value }}
+                            <span class="bmi-indicator bmi-{{ result.demographics.bmi_category }}">
+                                {{ result.demographics.bmi_category.title() }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="symptoms-summary">
+                <h3>📊 Symptom Summary</h3>
+                <p>You indicated <span class="symptom-count">{{ result.symptoms_present }}</span> out of {{ symptoms|length }} symptoms</p>
+            </div>
+
+            {% if result.key_symptoms %}
+            <div class="key-symptoms">
+                <h3>🔍 Key Symptom Contributions</h3>
+                {% for symptom, importance in result.key_symptoms %}
+                <div class="symptom-item">
+                    <div class="symptom-name">{{ symptom.replace('_', ' ').title() }}</div>
+                    {% set width_percent = (importance / 1.0 * 100) %}
+                    <div class="importance-bar">
+                        <div class="importance-fill" style="width: {{ width_percent }}%"></div>
+                    </div>
+                    <div class="importance-value">{{ "%.3f"|format(importance) }}</div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="recommendations">
+                <h3>💡 Recommendations</h3>
+                <p><strong>Always consult a healthcare professional</strong> for proper diagnosis and treatment. This assessment provides risk indicators only and cannot replace clinical evaluation.</p>
+            </div>
+
+            <div class="actions">
+                <a href="/" class="btn">🔄 New Assessment</a>
+                <a href="/about" class="btn btn-secondary">📱 About This Tool</a>
+            </div>
+
+            <div class="disclaimer">
+                <h4>⚠️ Medical Disclaimer</h4>
+                <p>This tool is for educational and informational purposes only. It does not constitute medical advice, diagnosis, or treatment. In case of health concerns, please consult qualified medical professionals. Emergency symptoms require immediate medical attention.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add some visual enhancements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate the results on load
+            const resultCard = document.querySelector('.result-card');
+            const interpretation = document.querySelector('.interpretation');
+
+            setTimeout(() => {
+                resultCard.style.transform = 'translateY(0)';
+                resultCard.style.opacity = '1';
+            }, 300);
+
+            setTimeout(() => {
+                interpretation.style.transform = 'translateY(0)';
+                interpretation.style.opacity = '1';
+            }, 600);
+
+            // Add some interactive elements
+            const importanceBars = document.querySelectorAll('.importance-fill');
+            importanceBars.forEach(bar => {
+                bar.style.transition = 'width 1.5s ease-out';
+            });
+
+            // Auto-scroll to results
+            setTimeout(() => {
+                window.scrollTo({ top: 200, behavior: 'smooth' });
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

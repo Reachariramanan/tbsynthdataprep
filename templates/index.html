@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TB Risk Assessment Tool</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .disclaimer {
+            background: #fff3cd;
+            border: 1px solid #ffeeba;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .disclaimer h3 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .disclaimer p {
+            color: #856404;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        .question {
+            margin-bottom: 25px;
+            padding: 25px;
+            border: 1px solid #e1e8ed;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+
+        .question:hover {
+            background: #f1f3f4;
+            border-color: #dadce0;
+        }
+
+        .question-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .question-description {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .radio-option input[type="radio"] {
+            margin-right: 8px;
+            transform: scale(1.2);
+        }
+
+        .radio-option label {
+            cursor: pointer;
+            font-weight: 500;
+            color: #444;
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin: 30px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .demographic-field {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #e1e8ed;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+
+        .demographic-field label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 1.05em;
+        }
+
+        .demographic-field input,
+        .demographic-field select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .demographic-field input:focus,
+        .demographic-field select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .demographic-field .description {
+            color: #666;
+            font-size: 0.85em;
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        .demographic-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .demographic-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .actions {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #e1e8ed;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 1.1em;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-large {
+            padding: 20px 50px;
+            font-size: 1.2em;
+        }
+
+        .progress {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .progress-text {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .contact-info {
+            margin-top: 30px;
+            padding: 20px;
+            background: #e8f4fd;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .contact-info h3 {
+            color: #155799;
+            margin-bottom: 10px;
+        }
+
+        .contact-info p {
+            color: #155799;
+            margin: 0;
+        }
+
+        .warning {
+            background: #ffeaa7;
+            color: #d63031;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .radio-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .btn-large {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🩺 TB Risk Assessment Tool</h1>
+            <p>Professional tuberculosis detection using clinical artificial intelligence</p>
+        </div>
+
+        <div class="content">
+            <div class="disclaimer">
+                <h3>⚠️ Medical Disclaimer</h3>
+                <p>This tool provides risk assessment based on symptoms and should not be used as a substitute for professional medical diagnosis. Always consult a healthcare provider for proper evaluation.</p>
+            </div>
+
+            <form method="POST" action="/assess">
+                <!-- Demographic Information Section -->
+                <h2 class="section-title">📋 Personal Information</h2>
+
+                <div class="demographic-grid">
+                    {% for demo in demographic_questions %}
+                    <div class="demographic-field">
+                        <label for="{{ demo.id }}">{{ demo.question }}</label>
+
+                        {% if demo.type == 'select' %}
+                            <select id="{{ demo.id }}" name="{{ demo.id }}" required>
+                                {% for option in demo.options %}
+                                <option value="{{ option.value }}">{{ option.label }}</option>
+                                {% endfor %}
+                            </select>
+                        {% else %}
+                            <input
+                                type="{{ demo.type }}"
+                                id="{{ demo.id }}"
+                                name="{{ demo.id }}"
+                                min="{{ demo.min }}"
+                                max="{{ demo.max }}"
+                                {% if demo.step %}step="{{ demo.step }}"{% endif %}
+                                placeholder="{{ demo.placeholder }}"
+                                required>
+                        {% endif %}
+
+                        {% if demo.description %}
+                        <div class="description">{{ demo.description }}</div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Symptom Questions Section -->
+                <h2 class="section-title">🩺 Symptom Assessment</h2>
+
+                {% for question in symptom_questions %}
+                <div class="question">
+                    <div class="question-title">{{ question.question }}</div>
+                    <div class="question-description">{{ question.description }}</div>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="{{ question.id }}_yes" name="{{ question.id }}" value="1" required>
+                            <label for="{{ question.id }}_yes">Yes</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="{{ question.id }}_no" name="{{ question.id }}" value="0" checked>
+                            <label for="{{ question.id }}_no">No</label>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <div class="actions">
+                    <button type="submit" class="btn btn-large">🔍 Assess TB Risk</button>
+                </div>
+            </form>
+
+            <div class="contact-info">
+                <h3>🚨 Emergency?</h3>
+                <p>If you're experiencing severe symptoms (hemoptysis, severe shortness of breath, high fever), seek immediate medical attention.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add some interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            const questions = document.querySelectorAll('.question');
+
+            // Add focus effects
+            questions.forEach(question => {
+                const inputs = question.querySelectorAll('input[type="radio"]');
+                inputs.forEach(input => {
+                    input.addEventListener('change', function() {
+                        questions.forEach(q => q.classList.remove('selected'));
+                        if (this.checked) {
+                            question.classList.add('selected');
+                        }
+                    });
+                });
+            });
+
+            // Form validation
+            const form = document.querySelector('form');
+            form.addEventListener('submit', function(e) {
+                const submitBtn = document.querySelector('.btn');
+                submitBtn.textContent = '🔄 Processing...';
+                submitBtn.disabled = true;
+            });
+
+            // Show progress
+            let answered = 0;
+            const totalQuestions = {{ symptom_questions|length }};
+            const radios = document.querySelectorAll('input[type="radio"]');
+
+            radios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    setTimeout(() => {
+                        answered = document.querySelectorAll('input[type="radio"]:checked').length;
+                        console.log(`Questions answered: ${answered}/${totalQuestions}`);
+                    }, 100);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
