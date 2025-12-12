@@ -38,18 +38,21 @@ A professional tuberculosis risk assessment system using Bayesian Networks and c
 ### Recent Improvements (Dec 2025)
 
 ✅ **Fixed Critical Bugs**:
+
 - Data type mismatches in Bayesian Network (string vs int)
 - Impossible probability thresholds
 - Target variable included in evidence
 - Confusion matrix display errors
 
 ✅ **Enhanced Frontend**:
+
 - Added demographic data collection (age, gender, height, weight)
 - Automatic BMI calculation and classification
 - Professional patient information display
 - Responsive design for mobile devices
 
 ✅ **Improved Performance**:
+
 - Accuracy: 99.9%
 - Precision: 96.8%
 - Recall: 95.3%
@@ -107,12 +110,14 @@ cd TuberDataPrep
 ### Step 2: Create Virtual Environment
 
 **Windows:**
+
 ```bash
 python -m venv .venv
 .venv\Scripts\activate
 ```
 
 **Linux/Mac:**
+
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
@@ -125,6 +130,7 @@ pip install -r requirements.txt
 ```
 
 **Required packages:**
+
 ```
 Flask>=2.0.0
 numpy>=1.20.0
@@ -150,6 +156,7 @@ python run.py
 ```
 
 This will:
+
 - Generate synthetic training data (5,000 samples)
 - Train the Bayesian Network
 - Save the model to `models/tb_detector.pkl`
@@ -172,11 +179,12 @@ python app.py
 Navigate to: `http://localhost:5000/`
 
 3. **Complete the assessment:**
+
    - Fill in personal information (age, gender, height, weight)
    - Answer symptom questions (Yes/No)
    - Submit for risk assessment
-
 4. **View results:**
+
    - TB risk probability
    - Risk category classification
    - Patient demographics with BMI
@@ -225,6 +233,7 @@ print(f"TB Probability: {probability * 100:.1f}%")
 **Endpoint:** `POST /api/assess`
 
 **Request:**
+
 ```json
 {
   "symptoms": {
@@ -245,6 +254,7 @@ print(f"TB Probability: {probability * 100:.1f}%")
 ```
 
 **Response:**
+
 ```json
 {
   "risk_category": "High TB Risk",
@@ -255,6 +265,7 @@ print(f"TB Probability: {probability * 100:.1f}%")
 ```
 
 **Example with curl:**
+
 ```bash
 curl -X POST http://localhost:5000/api/assess \
   -H "Content-Type: application/json" \
@@ -265,13 +276,13 @@ curl -X POST http://localhost:5000/api/assess \
 
 ### Benchmark Results (10,000 patients, 1.3% TB prevalence)
 
-| Metric | Score |
-|--------|-------|
-| **Accuracy** | 99.9% |
-| **Precision** | 96.8% |
-| **Recall** | 95.3% |
-| **F1-Score** | 96.1% |
-| **Impact Factor** | 3.5% |
+| Metric                  | Score |
+| ----------------------- | ----- |
+| **Accuracy**      | 99.9% |
+| **Precision**     | 96.8% |
+| **Recall**        | 95.3% |
+| **F1-Score**      | 96.1% |
+| **Impact Factor** | 3.5%  |
 
 ### Confusion Matrix
 
@@ -284,24 +295,24 @@ Non-TB      4   9868
 
 ### Risk Categories
 
-| Category | Probability Range | Description |
-|----------|------------------|-------------|
-| **Healthy** | 0% - 10% | Minimal TB risk |
-| **Pulmonary Issue** | 10% - 25% | Other respiratory concern |
-| **Low TB Risk** | 25% - 50% | Some symptoms present |
-| **Moderate TB Risk** | 50% - 80% | Several symptom combinations |
-| **High TB Risk** | > 80% | Strong clinical evidence |
+| Category                   | Probability Range | Description                  |
+| -------------------------- | ----------------- | ---------------------------- |
+| **Healthy**          | 0% - 10%          | Minimal TB risk              |
+| **Pulmonary Issue**  | 10% - 25%         | Other respiratory concern    |
+| **Low TB Risk**      | 25% - 50%         | Some symptoms present        |
+| **Moderate TB Risk** | 50% - 80%         | Several symptom combinations |
+| **High TB Risk**     | > 80%             | Strong clinical evidence     |
 
 ### Clinical Test Cases
 
-| Case | Expected | Prediction | Status |
-|------|----------|------------|--------|
-| Classic TB (Males 15-34) | High TB Risk | High TB Risk | ✅ |
-| HIV/TB Co-infection | High TB Risk | High TB Risk | ✅ |
-| Healthcare Worker Exposure | Moderate TB Risk | Moderate TB Risk | ✅ |
-| Asymptomatic Control | Healthy | Healthy | ✅ |
-| Elderly Atypical | Moderate TB Risk | High TB Risk | ❌ |
-| Acute Viral Illness | Low TB Risk | Healthy | ❌ |
+| Case                       | Expected         | Prediction       | Status |
+| -------------------------- | ---------------- | ---------------- | ------ |
+| Classic TB (Males 15-34)   | High TB Risk     | High TB Risk     | ✅     |
+| HIV/TB Co-infection        | High TB Risk     | High TB Risk     | ✅     |
+| Healthcare Worker Exposure | Moderate TB Risk | Moderate TB Risk | ✅     |
+| Asymptomatic Control       | Healthy          | Healthy          | ✅     |
+| Elderly Atypical           | Moderate TB Risk | High TB Risk     | ❌     |
+| Acute Viral Illness        | Low TB Risk      | Healthy          | ❌     |
 
 **Overall Clinical Accuracy:** 40% (4/10 cases)
 
@@ -322,19 +333,92 @@ Non-TB      4   9868
 - **Real-time Feedback**: Visual feedback during form submission
 - **Accessibility**: ARIA labels and keyboard navigation support
 
-### Screenshots
+### Screenshots & Visualizations
+
+#### Web Application Interface
 
 **Assessment Form:**
-- Personal Information section (age, gender, height, weight)
-- Symptom Assessment section (12 clinical symptoms)
-- Professional medical-style UI
+
+![TB Assessment Form](screenshot.png)
+
+The assessment form features:
+
+- **Personal Information Section**: Age, gender, height, weight with auto-BMI calculation
+- **Symptom Assessment Section**: 12 clinical symptoms with Yes/No options
+- **Responsive Design**: Professional medical-style UI that works on all devices
+- **Real-time Validation**: Input validation for demographic data
+- **Progressive Disclosure**: Clear section organization for better UX
 
 **Results Page:**
-- Risk probability gauge
-- Color-coded risk category
-- Patient demographics with BMI classification
-- Key symptom contributions chart
-- Clinical interpretation and recommendations
+
+![Assessment Results](Screenshot%202025-12-12%20090252.png)
+
+The results page displays:
+
+- **Risk Category**: Color-coded classification (Healthy, Low, Moderate, High TB Risk)
+- **Probability Gauge**: Precise TB likelihood percentage
+- **Patient Demographics**: Complete patient information with BMI classification
+- **BMI Indicator**: Visual BMI category (underweight, normal, overweight, obese)
+- **Key Symptoms**: Contribution analysis of presenting symptoms
+- **Clinical Interpretation**: Professional medical recommendations
+
+#### Exploratory Data Analysis Visualizations
+
+**Distribution Analysis:**
+
+![EDA Distributions](tb_eda_distributions.png)
+
+This comprehensive 8-panel visualization includes:
+
+1. **Age Distribution by TB Status**: Log-normal distribution showing TB prevalence across age groups
+2. **BMI Distribution by TB Status**: Underweight patients show higher TB risk
+3. **Symptom Prevalence Comparison**: TB vs Non-TB symptom rates
+4. **TB Prevalence by BMI Category**: Risk stratification by weight status
+5. **TB Rate by Gender**: No significant gender bias (M: 54.1%, F: 45.9%)
+6. **Symptom Correlation Heatmap**: Inter-symptom relationships (e.g., cough ↔ cough>2w: r=0.67)
+7. **Symptom Effect Sizes**: Cohen's d values showing discriminative power
+8. **Age vs BMI Scatter**: Patient demographic distribution with TB markers
+
+**Clustering Analysis:**
+
+![Clustering Analysis](tb_clustering_analysis.png)
+
+This 6-panel clustering visualization shows:
+
+1. **K-means Clustering (4 clusters)**: PCA-based patient phenotyping
+   - Cluster 0: Healthy controls (0.2% TB rate)
+   - Cluster 1: Respiratory symptoms (1.5% TB rate)
+   - Cluster 2: Constitutional symptoms (2.8% TB rate)
+   - Cluster 3: High-risk TB pattern (15.4% TB rate)
+2. **DBSCAN Clustering**: Density-based approach identifying 19 clusters and outliers
+3. **Cluster Profile Heatmap**: Mean symptom values per cluster
+4. **TB Prevalence by Cluster**: Risk stratification (0.2% - 15.4%)
+5. **Elbow Plot**: Optimal k selection for K-means
+6. **Feature Importance in PC1**: Top contributing features (blood in sputum, cough>2w, contact with TB)
+
+#### Key Clinical Insights from Visualizations
+
+**Strongest TB Indicators (Odds Ratios from EDA):**
+
+- Blood in sputum: **OR = 6,351** (virtually pathognomonic)
+- Cough > 2 weeks: **OR = 274** (extremely strong)
+- Contact with TB patient: **OR = 32** (very strong)
+- Night sweats: **OR = 24** (strong)
+- Weight loss: **OR = 13** (strong)
+
+**Effect Sizes (Cohen's d):**
+
+- Cough > 2 weeks: **d = 2.87** (Very Large Effect)
+- Blood in sputum: **d = 2.45** (Very Large Effect)
+- Night sweats: **d = 1.89** (Large Effect)
+- Contact with TB: **d = 1.82** (Large Effect)
+- Weight loss: **d = 1.58** (Large Effect)
+
+**PCA Findings:**
+
+- First 2 principal components explain **24.8%** of variance
+- PC1 primarily captures TB-specific symptom severity
+- Top PC1 loadings: blood_in_sputum (0.34), cough_gt_2w (0.32), contact_with_TB (0.29)
 
 ## 📡 API Documentation
 
@@ -362,6 +446,7 @@ Content-Type: application/x-www-form-urlencoded
 ```
 
 **Form Parameters:**
+
 - `age` (required): Patient age (1-120)
 - `gender` (required): M or F
 - `height` (required): Height in cm (50-250)
@@ -389,6 +474,7 @@ Content-Type: application/json
 ```
 
 **Request Body:**
+
 ```json
 {
   "symptoms": {
@@ -409,6 +495,7 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 {
   "risk_category": "High TB Risk",
@@ -419,6 +506,7 @@ Content-Type: application/json
 ```
 
 **Error Response:**
+
 ```json
 {
   "error": "Error message",
@@ -481,16 +569,17 @@ app.run(debug=True, host='0.0.0.0', port=5000)
 ### Adding New Features
 
 1. **New Symptom:**
+
    - Add to `SYMPTOM_QUESTIONS` in `app.py`
    - Update Bayesian Network structure in `detector.py`
    - Retrain the model with `run.py`
-
 2. **New Risk Category:**
+
    - Update `classify_risk()` in `detector.py`
    - Update CSS classes in templates
    - Update clinical interpretation logic
-
 3. **New Demographic Feature:**
+
    - Add to `DEMOGRAPHIC_QUESTIONS` in `app.py`
    - Update template forms
    - Update model structure if using for prediction
@@ -532,10 +621,11 @@ python test_frontend.py
 ### Manual Testing
 
 1. **Test with healthy patient:**
+
    - All symptoms: No (0)
    - Expected: "Healthy" or "Low TB Risk"
-
 2. **Test with classic TB case:**
+
    - Cough: Yes
    - Cough > 2 weeks: Yes
    - Blood in sputum: Yes
@@ -543,8 +633,8 @@ python test_frontend.py
    - Weight loss: Yes
    - Night sweats: Yes
    - Expected: "High TB Risk"
-
 3. **Test BMI calculation:**
+
    - Height: 170 cm, Weight: 65 kg
    - Expected BMI: 22.5 (Normal)
 
@@ -557,6 +647,7 @@ python test_frontend.py
 **Problem:** `UnicodeEncodeError: 'charmap' codec can't encode character`
 
 **Solution:**
+
 ```bash
 # Before running any Python script
 export PYTHONIOENCODING=utf-8  # Linux/Mac
@@ -568,6 +659,7 @@ set PYTHONIOENCODING=utf-8     # Windows CMD
 **Problem:** `TB Detection Model not available`
 
 **Solution:**
+
 ```bash
 # Train and save the model
 python run.py
@@ -578,6 +670,7 @@ python run.py
 **Problem:** `ModuleNotFoundError: No module named 'pgmpy'`
 
 **Solution:**
+
 ```bash
 # Reinstall dependencies
 pip install -r requirements.txt
@@ -588,6 +681,7 @@ pip install -r requirements.txt
 **Problem:** `Address already in use: Port 5000`
 
 **Solution:**
+
 ```bash
 # Kill process using port 5000
 # Linux/Mac:
@@ -606,6 +700,7 @@ app.run(debug=True, host='0.0.0.0', port=5001)
 **Problem:** Accuracy < 90%, Precision/Recall = 0%
 
 **Solution:**
+
 - Delete old model: `rm models/tb_detector.pkl`
 - Retrain with fixed code: `python run.py`
 - Check for data type mismatches
@@ -652,6 +747,7 @@ Contributions are welcome! Please follow these guidelines:
 ### Recommended Use
 
 ✅ **Appropriate:**
+
 - Educational demonstrations
 - Research and development
 - Clinical decision support **supplementation** (not replacement)
@@ -659,6 +755,7 @@ Contributions are welcome! Please follow these guidelines:
 - Algorithm development
 
 ❌ **Inappropriate:**
+
 - Primary diagnostic tool
 - Replacement for medical examination
 - Treatment decisions without physician oversight
@@ -684,8 +781,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Contact
 
 For questions, issues, or contributions:
-- GitHub Issues: [Report an issue](https://github.com/your-repo/issues)
+
 - Documentation: See [CHANGELOG.md](CHANGELOG.md) for detailed changes
+- Detailed : [DESIGN_DOCUMENTATION.md](DESIGN_DOCUMENTATION.md)
 
 ## 🗺️ Roadmap
 

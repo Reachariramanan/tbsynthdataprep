@@ -134,3 +134,151 @@ WARNING:werkzeug: * Running on all addresses.
    WARNING: This is a development server. Do not use it in a production deployment.
 INFO:werkzeug: * Running on http://192.168.29.61:5000/ (Press CTRL+C to quit)
 INFO:werkzeug:127.0.0.1 - - [12/Dec/2025 09:03:41] "GET / HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\reach\\OneDrive\\Desktop\\TuberDataPrep\\data_sampler_improved.py', reloading
+🚀 Starting TB Detection Web Interface...
+📊 Available endpoints:
+   Home: http://localhost:5000/
+   API: http://localhost:5000/api/assess
+   About: http://localhost:5000/about
+   Disclaimer: http://localhost:5000/medical-disclaimer
+✅ TB Detection Model loaded successfully
+INFO:werkzeug: * Restarting with watchdog (windowsapi)
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 145-903-840
+WARNING:werkzeug: * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+INFO:werkzeug: * Running on http://192.168.29.61:5000/ (Press CTRL+C to quit)
+INFO:werkzeug: * Detected change in 'c:\\Users\\reach\\OneDrive\\Desktop\\TuberDataPrep\\data_sampler.py', reloading
+INFO:werkzeug: * Detected change in 'c:\\Users\\reach\\OneDrive\\Desktop\\TuberDataPrep\\data_sampler.py.tmp.62016.1765511777561', reloading
+🚀 Starting TB Detection Web Interface...
+📊 Available endpoints:
+   Home: http://localhost:5000/
+   API: http://localhost:5000/api/assess
+   About: http://localhost:5000/about
+   Disclaimer: http://localhost:5000/medical-disclaimer
+✅ TB Detection Model loaded successfully
+INFO:werkzeug: * Restarting with watchdog (windowsapi)
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 145-903-840
+WARNING:werkzeug: * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+INFO:werkzeug: * Running on http://192.168.29.61:5000/ (Press CTRL+C to quit)
+INFO:werkzeug: * Detected change in 'c:\\Users\\reach\\OneDrive\\Desktop\\TuberDataPrep\\data_sampler.py', reloading
+🚀 Starting TB Detection Web Interface...
+📊 Available endpoints:
+   Home: http://localhost:5000/
+   API: http://localhost:5000/api/assess
+   About: http://localhost:5000/about
+   Disclaimer: http://localhost:5000/medical-disclaimer
+✅ TB Detection Model loaded successfully
+INFO:werkzeug: * Restarting with watchdog (windowsapi)
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 145-903-840
+WARNING:werkzeug: * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+INFO:werkzeug: * Running on http://192.168.29.61:5000/ (Press CTRL+C to quit)
+INFO:werkzeug: * Detected change in 'c:\\Users\\reach\\OneDrive\\Desktop\\TuberDataPrep\\data_sampler.py', reloading
+INFO:werkzeug: * Detected change in 'c:\\Users\\reach\\OneDrive\\Desktop\\TuberDataPrep\\data_sampler.py.tmp.62016.1765511963377', reloading
+🚀 Starting TB Detection Web Interface...
+📊 Available endpoints:
+   Home: http://localhost:5000/
+   API: http://localhost:5000/api/assess
+   About: http://localhost:5000/about
+   Disclaimer: http://localhost:5000/medical-disclaimer
+✅ TB Detection Model loaded successfully
+INFO:werkzeug: * Restarting with watchdog (windowsapi)
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 145-903-840
+WARNING:werkzeug: * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+INFO:werkzeug: * Running on http://192.168.29.61:5000/ (Press CTRL+C to quit)
+INFO:werkzeug: * Detected change in 'c:\\Users\\reach\\OneDrive\\Desktop\\TuberDataPrep\\data_sampler.py', reloading
+INFO:werkzeug: * Detected change in 'c:\\Users\\reach\\OneDrive\\Desktop\\TuberDataPrep\\data_sampler.py.tmp.62016.1765512107833', reloading
+🚀 Starting TB Detection Web Interface...
+📊 Available endpoints:
+   Home: http://localhost:5000/
+   API: http://localhost:5000/api/assess
+   About: http://localhost:5000/about
+   Disclaimer: http://localhost:5000/medical-disclaimer
+✅ TB Detection Model loaded successfully
+INFO:werkzeug: * Restarting with watchdog (windowsapi)
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 145-903-840
+WARNING:werkzeug: * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+INFO:werkzeug: * Running on http://192.168.29.61:5000/ (Press CTRL+C to quit)
+INFO:werkzeug: * Detected change in 'c:\\Users\\reach\\OneDrive\\Desktop\\TuberDataPrep\\data_sampler.py', reloading
+INFO:werkzeug: * Detected change in 'c:\\Users\\reach\\OneDrive\\Desktop\\TuberDataPrep\\data_sampler.py.tmp.62016.1765512120814', reloading
+🚀 Starting TB Detection Web Interface...
+📊 Available endpoints:
+   Home: http://localhost:5000/
+   API: http://localhost:5000/api/assess
+   About: http://localhost:5000/about
+   Disclaimer: http://localhost:5000/medical-disclaimer
+✅ TB Detection Model loaded successfully
+INFO:werkzeug: * Restarting with watchdog (windowsapi)
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 145-903-840
+WARNING:werkzeug: * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+INFO:werkzeug: * Running on http://192.168.29.61:5000/ (Press CTRL+C to quit)
+INFO:werkzeug: * Detected change in 'c:\\Users\\reach\\OneDrive\\Desktop\\TuberDataPrep\\data_sampler.py', reloading
+INFO:werkzeug: * Detected change in 'c:\\Users\\reach\\OneDrive\\Desktop\\TuberDataPrep\\data_sampler.py.tmp.62016.1765512154223', reloading
+🚀 Starting TB Detection Web Interface...
+📊 Available endpoints:
+   Home: http://localhost:5000/
+   API: http://localhost:5000/api/assess
+   About: http://localhost:5000/about
+   Disclaimer: http://localhost:5000/medical-disclaimer
+✅ TB Detection Model loaded successfully
+INFO:werkzeug: * Restarting with watchdog (windowsapi)
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 145-903-840
+WARNING:werkzeug: * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+INFO:werkzeug: * Running on http://192.168.29.61:5000/ (Press CTRL+C to quit)
+INFO:werkzeug: * Detected change in 'C:\\Python313\\Lib\\plistlib.py', reloading
+INFO:werkzeug: * Detected change in 'C:\\Python313\\Lib\\statistics.py', reloading
+🚀 Starting TB Detection Web Interface...
+📊 Available endpoints:
+   Home: http://localhost:5000/
+   API: http://localhost:5000/api/assess
+   About: http://localhost:5000/about
+   Disclaimer: http://localhost:5000/medical-disclaimer
+✅ TB Detection Model loaded successfully
+INFO:werkzeug: * Restarting with watchdog (windowsapi)
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 145-903-840
+WARNING:werkzeug: * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+INFO:werkzeug: * Running on http://192.168.29.61:5000/ (Press CTRL+C to quit)
+INFO:werkzeug: * Detected change in 'c:\\Users\\reach\\OneDrive\\Desktop\\TuberDataPrep\\detector.py', reloading
+INFO:werkzeug: * Detected change in 'c:\\Users\\reach\\OneDrive\\Desktop\\TuberDataPrep\\.venv\\Lib\\site-packages\\torch\\nn\\functional.py', reloading
+INFO:werkzeug: * Detected change in 'c:\\Users\\reach\\OneDrive\\Desktop\\TuberDataPrep\\.venv\\Lib\\site-packages\\torch\\nn\\modules\\rnn.py', reloading
+🚀 Starting TB Detection Web Interface...
+📊 Available endpoints:
+   Home: http://localhost:5000/
+   API: http://localhost:5000/api/assess
+   About: http://localhost:5000/about
+   Disclaimer: http://localhost:5000/medical-disclaimer
+✅ TB Detection Model loaded successfully
+INFO:werkzeug: * Restarting with watchdog (windowsapi)
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 145-903-840
+WARNING:werkzeug: * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+INFO:werkzeug: * Running on http://192.168.29.61:5000/ (Press CTRL+C to quit)
+INFO:werkzeug: * Detected change in 'C:\\Python313\\Lib\\threading.py', reloading
+🚀 Starting TB Detection Web Interface...
+📊 Available endpoints:
+   Home: http://localhost:5000/
+   API: http://localhost:5000/api/assess
+   About: http://localhost:5000/about
+   Disclaimer: http://localhost:5000/medical-disclaimer
+✅ TB Detection Model loaded successfully
+INFO:werkzeug: * Restarting with watchdog (windowsapi)
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 145-903-840
+WARNING:werkzeug: * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+INFO:werkzeug: * Running on http://192.168.29.61:5000/ (Press CTRL+C to quit)

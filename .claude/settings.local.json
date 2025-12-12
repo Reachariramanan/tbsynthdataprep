@@ -10,7 +10,9 @@
       "Bash(cat:*)",
       "Bash(python test_frontend.py:*)",
       "Bash(python eda.py:*)",
-      "Bash(pkill:*)"
+      "Bash(pkill:*)",
+      "Bash(python data_sampler.py:*)",
+      "Bash(python:*)"
     ]
   }
 }

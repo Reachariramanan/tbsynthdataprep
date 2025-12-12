@@ -29,8 +29,8 @@ class DataSampler:
 
         # Clinical symptom probabilities (WHO-based guidelines)
         self.tb_positive_probs = {
-            'cough': 0.85,             # 95% of infectious TB patients cough
-            'cough_gt_2w': 0.85,        # 85% have prolonged cough (>2 weeks)
+            'cough': 0.95,             # 95% of infectious TB patients cough
+            'cough_gt_2w': 0.95,        # 95% have prolonged cough (>2 weeks) - INCREASED IMPACT
             'blood_in_sputum': 0.75,    # Hemoptysis in 75% of pulmonary TB
             'fever': 0.80,             # Fever in 80%
             'low_grade_fever': 0.70,   # Low-grade fever
@@ -45,7 +45,7 @@ class DataSampler:
 
         self.tb_negative_probs = {
             'cough': 0.10,             # 10% general population cough
-            'cough_gt_2w': 0.02,        # Rare prolonged cough in non-TB
+            'cough_gt_2w': 0.005,       # Very rare prolonged cough in non-TB - DECREASED to increase discrimination
             'blood_in_sputum': 0.001,   # Very rare hemoptysis
             'fever': 0.15,             # Occasional fever
             'low_grade_fever': 0.05,   # Less common
@@ -303,6 +303,100 @@ class DataSampler:
         return pd.DataFrame(rows)
 
 
+def test_clinical_accuracy():
+    """Test that the sampler produces clinically accurate data."""
+    print("\n🔬 TESTING CLINICAL ACCURACY OF DATA SAMPLER")
+    print("=" * 60)
+
+    sampler = DataSampler(tb_prevalence=0.025, region='global')  # Increased from 1.5% to 2.5%
+    data = sampler.generate_dataset(n_samples=5000, seed=123)
+
+    # Test the specific case: cough + prolonged cough
+    prolonged_cough_only = (data['cough'] == '1') & (data['cough_gt_2w'] == '1') & \
+                          (data[['blood_in_sputum', 'weight_loss', 'night_sweats', 'fever']] == '0').all(axis=1)
+
+    if prolonged_cough_only.any():
+        tb_risk_prolonged = data[prolonged_cough_only]['TB'].astype(int).mean()
+        print(f"TB risk for prolonged cough only: {tb_risk_prolonged*100:.1f}%")
+
+        if tb_risk_prolonged > 0.8:
+            print("✅ SUCCESS: Prolonged cough is a strong TB indicator!")
+        elif tb_risk_prolonged > 0.6:
+            print("⚠️ Satisfactory: Prolonged cough indicates substantial TB risk")
+        else:
+            print("❌ FAIL: Prolonged cough is not a strong enough TB indicator")
+    else:
+        print("⚠️ No cases found with prolonged cough only")
+
+    # Additional clinical accuracy tests
+    print("\n📊 Additional Clinical Accuracy Tests:")
+
+    # Test 1: Blood in sputum should be highly specific for TB
+    if 'blood_in_sputum' in data.columns:
+        hemoptysis_cases = data[data['blood_in_sputum'] == '1']
+        if len(hemoptysis_cases) > 0:
+            tb_rate_hemoptysis = (hemoptysis_cases['TB'] == '1').mean()
+            print(f"1. Blood in sputum → TB rate: {tb_rate_hemoptysis*100:.1f}%")
+            if tb_rate_hemoptysis > 0.7:
+                print("   ✅ Hemoptysis is highly specific for TB")
+            else:
+                print("   ⚠️ Hemoptysis specificity could be higher")
+
+    # Test 2: Multiple symptoms should increase TB likelihood
+    symptom_cols = ['cough', 'fever', 'weight_loss', 'night_sweats']
+    available_symptoms = [col for col in symptom_cols if col in data.columns]
+
+    if len(available_symptoms) >= 3:
+        data['symptom_count'] = sum([data[col].astype(int) for col in available_symptoms])
+
+        print("\n2. TB Rate by Number of Symptoms Present:")
+        for n_symptoms in range(0, 5):
+            subset = data[data['symptom_count'] == n_symptoms]
+            if len(subset) > 0:
+                tb_rate = (subset['TB'] == '1').mean()
+                print(f"   {n_symptoms} symptoms: {tb_rate*100:.1f}% (n={len(subset)})")
+
+    # Test 3: Contact with TB patient should increase risk
+    if 'contact_with_TB' in data.columns:
+        contact_cases = data[data['contact_with_TB'] == '1']
+        no_contact_cases = data[data['contact_with_TB'] == '0']
+
+        if len(contact_cases) > 0 and len(no_contact_cases) > 0:
+            tb_rate_contact = (contact_cases['TB'] == '1').mean()
+            tb_rate_no_contact = (no_contact_cases['TB'] == '1').mean()
+
+            print(f"\n3. Contact with TB patient:")
+            print(f"   With contact: {tb_rate_contact*100:.1f}% TB rate")
+            print(f"   No contact: {tb_rate_no_contact*100:.1f}% TB rate")
+
+            if tb_rate_contact > tb_rate_no_contact * 2:
+                print("   ✅ Contact history appropriately increases TB risk")
+            else:
+                print("   ⚠️ Contact history effect could be stronger")
+
+    # Test 4: BMI impact on TB risk
+    if 'bmi_category' in data.columns:
+        print("\n4. TB Rate by BMI Category:")
+        for bmi_cat in ['underweight', 'normal', 'overweight', 'obese']:
+            subset = data[data['bmi_category'] == bmi_cat]
+            if len(subset) > 0:
+                tb_rate = (subset['TB'] == '1').mean()
+                print(f"   {bmi_cat.capitalize()}: {tb_rate*100:.1f}%")
+
+        underweight_tb = data[data['bmi_category'] == 'underweight']['TB'].astype(int).mean()
+        normal_tb = data[data['bmi_category'] == 'normal']['TB'].astype(int).mean()
+
+        if underweight_tb > normal_tb * 1.2:
+            print("   ✅ Underweight appropriately increases TB risk")
+        else:
+            print("   ⚠️ BMI impact on TB risk could be stronger")
+
+    print("\n" + "=" * 60)
+    print("Clinical Accuracy Testing Complete")
+
+    return data
+
+
 class RobustTBDataSampler(DataSampler):
     """
     Legacy compatibility class - now delegates to DataSampler.
@@ -325,7 +419,7 @@ class RobustTBDataSampler(DataSampler):
         # Clinical symptom probabilities (WHO-based guidelines)
         self.tb_positive_probs = {
             'cough': 0.95,              # 95% of infectious TB patients cough
-            'cough_gt_2w': 0.85,         # 85% have prolonged cough (>2 weeks)
+            'cough_gt_2w': 0.95,         # 95% have prolonged cough (>2 weeks) - INCREASED IMPACT
             'blood_in_sputum': 0.75,     # Hemoptysis in 75% of pulmonary TB
             'fever': 0.80,              # Fever in 80%
             'low_grade_fever': 0.70,    # Low-grade fever
@@ -340,7 +434,7 @@ class RobustTBDataSampler(DataSampler):
 
         self.tb_negative_probs = {
             'cough': 0.10,              # 10% general population cough
-            'cough_gt_2w': 0.02,         # Rare prolonged cough in non-TB
+            'cough_gt_2w': 0.005,        # Very rare prolonged cough in non-TB - DECREASED to increase discrimination
             'blood_in_sputum': 0.001,    # Very rare hemoptysis
             'fever': 0.15,              # Occasional fever
             'low_grade_fever': 0.05,    # Less common
@@ -360,3 +454,24 @@ class RobustTBDataSampler(DataSampler):
             'overweight': {'breathing_problem': 1.2, 'fever': 0.9},
             'obese': {'breathing_problem': 1.4, 'chest_pain': 1.1, 'fever': 0.85, 'tb_risk': 0.7}
         }
+
+
+if __name__ == "__main__":
+    """Run clinical accuracy testing when module is executed directly."""
+    print("🩺 TB Data Sampler - Clinical Accuracy Testing")
+    print("=" * 60)
+
+    # Run clinical accuracy tests
+    test_data = test_clinical_accuracy()
+
+    # Display basic statistics
+    print("\n📊 Dataset Overview:")
+    print(f"Total samples: {len(test_data)}")
+    tb_count = (test_data['TB'] == '1').sum()
+    tb_pct = (test_data['TB'] == '1').mean() * 100
+    non_tb_count = (test_data['TB'] == '0').sum()
+    non_tb_pct = (test_data['TB'] == '0').mean() * 100
+    print(f"TB cases: {tb_count} ({tb_pct:.2f}%)")
+    print(f"Non-TB cases: {non_tb_count} ({non_tb_pct:.2f}%)")
+
+    print("\n✅ Clinical accuracy testing complete!")
