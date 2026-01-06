@@ -1,8 +1,5 @@
-numpy
 pandas
-scipy
+numpy
+fastapi
+uvicorn
 scikit-learn
-pgmpy
-matplotlib
-seaborn
-flask

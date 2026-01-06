@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TB Risk Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .symptom-group {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .symptom-group h3 {
+            margin-top: 0;
+            color: #34495e;
+        }
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 10px;
+        }
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+        }
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .submit-btn {
+            background-color: #3498db;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 5px;
+            display: none;
+        }
+        .result.high {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .result.moderate {
+            background-color: #f39c12;
+            color: white;
+        }
+        .result.low {
+            background-color: #27ae60;
+            color: white;
+        }
+        .result.pulmonary {
+            background-color: #9b59b6;
+            color: white;
+        }
+        .probability {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .loading {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>TB Risk Prediction Tool</h1>
+        <p>Please check all symptoms that apply to you:</p>
+
+        <form id="symptomForm">
+            <div class="symptom-group">
+                <h3>Respiratory Symptoms</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="cough" name="cough">
+                        <label for="cough">Cough</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="cough_gt_2w" name="cough_gt_2w">
+                        <label for="cough_gt_2w">Cough lasting more than 2 weeks</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="blood_in_sputum" name="blood_in_sputum">
+                        <label for="blood_in_sputum">Blood in sputum</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="chest_pain" name="chest_pain">
+                        <label for="chest_pain">Chest pain</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="breathing_problem" name="breathing_problem">
+                        <label for="breathing_problem">Difficulty breathing</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="symptom-group">
+                <h3>General Symptoms</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="fever" name="fever">
+                        <label for="fever">Fever</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="weight_loss" name="weight_loss">
+                        <label for="weight_loss">Unexplained weight loss</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="night_sweats" name="night_sweats">
+                        <label for="night_sweats">Night sweats</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="fatigue" name="fatigue">
+                        <label for="fatigue">Fatigue</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="loss_of_appetite" name="loss_of_appetite">
+                        <label for="loss_of_appetite">Loss of appetite</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="symptom-group">
+                <h3>Exposure History</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="contact_with_TB" name="contact_with_TB">
+                        <label for="contact_with_TB">Recent contact with TB patient</label>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">Check TB Risk</button>
+        </form>
+
+        <div id="loading" class="loading" style="display: none;">
+            Analyzing symptoms...
+        </div>
+
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('symptomForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // Show loading
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('result').style.display = 'none';
+
+            // Collect form data
+            const formData = new FormData(e.target);
+            const symptoms = {};
+
+            // Convert checkbox values to 0/1
+            const symptomNames = [
+                'cough', 'cough_gt_2w', 'blood_in_sputum', 'fever', 'weight_loss',
+                'night_sweats', 'chest_pain', 'breathing_problem', 'fatigue',
+                'loss_of_appetite', 'contact_with_TB'
+            ];
+
+            symptomNames.forEach(name => {
+                symptoms[name] = formData.has(name) ? 1 : 0;
+            });
+
+            try {
+                // Make API call
+                const response = await fetch('http://localhost:8000/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(symptoms)
+                });
+
+                const result = await response.json();
+
+                // Hide loading
+                document.getElementById('loading').style.display = 'none';
+
+                // Display result
+                const resultDiv = document.getElementById('result');
+                resultDiv.style.display = 'block';
+
+                let riskClass = '';
+                if (result.risk === 'High TB Risk') {
+                    riskClass = 'high';
+                } else if (result.risk === 'Moderate TB Risk') {
+                    riskClass = 'moderate';
+                } else if (result.risk === 'Low TB Risk') {
+                    riskClass = 'low';
+                } else if (result.risk === 'Pulmonary Issue') {
+                    riskClass = 'pulmonary';
+                }
+
+                resultDiv.className = `result ${riskClass}`;
+
+                resultDiv.innerHTML = `
+                    <h3>Risk Assessment: ${result.risk}</h3>
+                    <p class="probability">TB Probability: ${(result.tb_probability * 100).toFixed(1)}%</p>
+                    <p><strong>Important:</strong> This is not a medical diagnosis. Please consult a healthcare professional for proper evaluation.</p>
+                `;
+
+            } catch (error) {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('result').style.display = 'block';
+                document.getElementById('result').className = 'result low';
+                document.getElementById('result').innerHTML = `
+                    <h3>Error</h3>
+                    <p>Unable to connect to the prediction service. Please make sure the backend is running.</p>
+                `;
+                console.error('Error:', error);
+            }
+        });
+
+        // Logic to disable dependent checkboxes
+        document.getElementById('cough').addEventListener('change', function() {
+            const coughGt2w = document.getElementById('cough_gt_2w');
+            const bloodInSputum = document.getElementById('blood_in_sputum');
+
+            if (!this.checked) {
+                coughGt2w.checked = false;
+                bloodInSputum.checked = false;
+                coughGt2w.disabled = true;
+                bloodInSputum.disabled = true;
+            } else {
+                coughGt2w.disabled = false;
+                bloodInSputum.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
